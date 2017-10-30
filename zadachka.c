@@ -1,6 +1,9 @@
 #include<stdio.h> 
 #include<string.h> 
 #include<unistd.h> 
+#include<syscall.h> 
+
+
 int main(){ 
 
 	const char *s = "Hello, emko :) \n";
@@ -8,8 +11,9 @@ int main(){
 	ssize_t wresult;	
 	size_t written = 0; 
 
-	while(written != len){	 { 	
-	wresult = write( STDOUT_FILENO, s + written, len - written); 
+	while(written != len){	 	
+	//wresult = write( STDOUT_FILENO, s + written, len - written);
+	wresult - syscall(SYS_write, STDOUT_FILENO, s + written, len - written);	
 	if(wresult < 0) {
 	perror("ima greshka"); 
 	return 1; 
@@ -17,4 +21,4 @@ int main(){
 	written += wresult; 
 	} 
 	return 0; 
-}
+	}
